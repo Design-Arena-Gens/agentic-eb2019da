@@ -1,0 +1,228 @@
+:root {
+  color-scheme: dark;
+  font-family: "Exo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(120% 120% at 50% 10%, #090b34 0%, #050510 45%, #010107 100%);
+  color: #f8f9ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+canvas {
+  image-rendering: pixelated;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+  gap: 24px;
+}
+
+.game-canvas {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(4, 8, 32, 0.75);
+  background: rgba(2, 3, 12, 0.88);
+  max-width: 100%;
+}
+
+.hud {
+  width: min(960px, 100%);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  background: rgba(8, 10, 28, 0.72);
+  border-radius: 16px;
+  padding: 18px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px rgba(3, 6, 22, 0.6);
+}
+
+.hud-left,
+.hud-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.stat.warning .value {
+  color: #ff7f7f;
+}
+
+.label {
+  font-family: "Orbitron", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.bar-fill.hull {
+  background: linear-gradient(90deg, #ff7f6b 0%, #ffb56b 100%);
+}
+
+.bar-fill.shield {
+  background: linear-gradient(90deg, #6bafff 0%, #6ff7ff 100%);
+}
+
+.bar-fill.xp {
+  background: linear-gradient(90deg, #c86bff 0%, #ff93fb 100%);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 12, 0.74);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.upgrade-panel,
+.gameover-panel {
+  background: rgba(10, 12, 32, 0.94);
+  border-radius: 20px;
+  padding: 32px;
+  width: min(720px, 90%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 80px rgba(6, 8, 28, 0.75);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.upgrade-card {
+  background: rgba(24, 30, 60, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upgrade-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(118, 255, 234, 0.6);
+  box-shadow: 0 16px 40px rgba(36, 255, 214, 0.18);
+}
+
+.upgrade-card h3 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.1rem;
+}
+
+.upgrade-card p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-family: "Orbitron", sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, #64ffe1 0%, #648cff 100%);
+  color: #020510;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8f9ff;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(100, 140, 255, 0.3);
+}
+
+.instructions {
+  font-size: 0.85rem;
+  opacity: 0.66;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gameover-panel h2 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.gameover-panel p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .hud {
+    flex-direction: column;
+  }
+}
